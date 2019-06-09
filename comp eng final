@@ -1,0 +1,153 @@
+int motorRF = 9;
+int motorLF = 10;
+int motorLB = 11;
+int motorRB = 12;
+int sense = A1;//left
+int sense2 = A2;//right
+int diff;
+//Int sense3=A3;
+//0=Strignt
+//2=Left
+//1=Right
+//3=sharpRight
+//4=sharpLeft
+int lastTurn;
+
+void setup()
+{
+Serial.begin(9600);
+pinMode(motorRF, OUTPUT);
+pinMode(motorLF, OUTPUT);
+pinMode(motorLB, OUTPUT);
+pinMode(motorRB, OUTPUT);
+pinMode(sense, INPUT);
+pinMode(sense2, INPUT);
+// pinMode(sense3, INPUT);
+}
+
+
+void loop()
+{
+digitalWrite(sense, HIGH);
+digitalWrite(sense2, HIGH);
+// digitalWrite(sense3, HIGH);
+int senseval = analogRead(sense);//left
+int senseval2 = analogRead(sense2);//right
+  diff = senseval - senseval2;
+ if (diff>400){
+  lastTurn=1;
+  }
+
+ else if(diff<-400){ 
+  lastTurn=2;
+}
+
+/*
+ if (senseval2 < 400 ){
+  lastTurn=0;
+  }
+
+ else if(senseval < 400){ 
+  lastTurn=1;
+}
+
+if (lastTurn=0){
+sharpRight();
+  }
+
+  if(lastTurn=1){
+    sharpLeft();
+    }
+*/
+/*
+if(diff>0){
+  sharpLeft();
+  }
+
+if(diff<0){
+  sharpRight();
+  }
+  
+  */
+
+/*
+switch (lastTurn) {
+  case 1:
+sharpLeft();
+    
+    break;
+  case 2:
+    sharpLeft();
+    break;
+  default:
+  forward();
+    break;
+}
+*/
+
+if(diff>10){
+  sharpLeft();
+  }
+
+else if(diff<-10){
+  sharpRight();
+  }
+
+else{forward();}
+
+//  println(diff);
+  
+  }
+
+
+
+ // while (){}
+
+void turn(){
+   
+  
+  
+  }
+void halt(){
+digitalWrite(motorRF, LOW);
+digitalWrite(motorLF, LOW);
+digitalWrite(motorLB, LOW);
+digitalWrite(motorRB, LOW); 
+  }
+
+
+
+void forward() {
+  digitalWrite(motorLF, HIGH);
+  digitalWrite(motorRF, HIGH);
+  digitalWrite(motorLB, LOW);
+  digitalWrite(motorRB, LOW);
+}
+
+void left() {
+  digitalWrite(motorLF, LOW);
+  digitalWrite(motorRF, HIGH);
+  digitalWrite(motorLB, LOW);
+  digitalWrite(motorRB, LOW);
+}
+
+void right() {
+  digitalWrite(motorLF, HIGH);
+  digitalWrite(motorRF, LOW);
+  digitalWrite(motorLB, LOW);
+  digitalWrite(motorRB, LOW);
+}
+
+void sharpLeft() {
+  digitalWrite(motorLF, LOW);
+  digitalWrite(motorRF, HIGH);
+  digitalWrite(motorLB, HIGH);
+  digitalWrite(motorRB, LOW);
+}
+
+void sharpRight() {
+  digitalWrite(motorLF, HIGH);
+  digitalWrite(motorRF, LOW);
+  digitalWrite(motorLB, LOW);
+  digitalWrite(motorRB, HIGH);
+}
